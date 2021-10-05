@@ -1,5 +1,6 @@
 ﻿using Activity2.Models;
 using Activity2.Services;
+using Activity2.Services.Repositories;
 using Bogus;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,10 +14,18 @@ namespace Activity2.Controllers
     {
         public IActionResult Index()
         {
-            HardCodedSampleDataRepository repo = new();
-            return View(repo.GetAllProducts());
+            ProductsDAO products = new();
+            return View(products.GetAllProducts());
         }
-
+        public IActionResult SearchResults(string searchTerm)
+        {
+            ProductsDAO products = new();
+            return View("Index", products.SearchProducts(searchTerm));
+        }
+        public IActionResult SearchForm()
+        {
+            return View();
+        }
         public IActionResult Message()
         {
             return View();
